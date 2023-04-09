@@ -1,0 +1,27 @@
+
+config:
+    name: "likeshop"
+    variables:
+        device_sn: "XYZ"
+    base_url: "http://sc.xinchengchuansheng.com/"
+
+testcases:
+-
+    name: 添加收货地址
+    testcase: ../testcases/user_address_add.yml
+    parameters:
+     address-contact: ${P(../data/address.csv)}
+#    variables:
+#        device_sn: $device_sn
+-
+    name: 查看收货地址列表
+    testcase: ../testcases/user_address_list.yml
+#    variables:
+#        device_sn: $device_sn
+-
+    name: 修改收货地址-查询列表后找到用户Id后参数化进行修改操作
+    testcase: ../testcases/user_address_list_update.yml
+
+-
+    name: 删除收货地址查询列表后找到用户Id后参数化进行删除操作
+    testcase: ../testcases/user_address_del.yml

@@ -1,0 +1,58 @@
+config:
+    name: 删除收货地址
+    variables:
+    - aa: ${ENV(base_url)}
+teststeps:
+-   name: /api/user_address/lists
+    request:
+        headers:
+            Content-Type: application/json
+            token: ${login()}
+        method: GET
+        url: $aa/api/user_address/lists
+    extract:
+     - userid: content.data.0.id
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=utf-8
+    -   eq:
+        - content.code
+        - 1
+    -   eq:
+        - content.msg
+        - 获取成功
+    -   eq:
+        - content.show
+        - 0
+-   name: /api/user_address/update
+    request:
+        headers:
+            Content-Type: application/json
+            token: ${login()}
+        json:
+            id: $userid
+        method: POST
+        url: $aa/api/user_address/del
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=utf-8
+    -   eq:
+        - content.code
+        - 1
+    -   eq:
+        - content.msg
+        - 删除成功
+    -   eq:
+        - content.data
+        - 1
+    -   eq:
+        - content.show
+        - 0

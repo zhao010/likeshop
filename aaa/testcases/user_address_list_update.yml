@@ -1,0 +1,67 @@
+config:
+    name: 修改收货地址列表
+    variables:
+    - aa: ${ENV(base_url)}
+teststeps:
+-   name: /api/user_address/lists
+    request:
+        headers:
+            Content-Type: application/json
+            token: ${login()}
+        method: GET
+        url: $aa/api/user_address/lists
+    extract:
+     - userid: content.data.0.id
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=utf-8
+    -   eq:
+        - content.code
+        - 1
+    -   eq:
+        - content.msg
+        - 获取成功
+    -   eq:
+        - content.show
+        - 0
+    teardown_hooks:
+    - ${sleep(5)}
+-   name: /api/user_address/update
+    request:
+        headers:
+            Content-Type: application/json
+            token: ${login()}
+        json:
+            address: 椤垫棤棰漊甯� 璞嗕竵
+            city_id: 110100
+            contact: aa
+            district_id: 110101
+            id: $userid
+            is_default: 1
+            province_id: 110000
+            telephone: '17600789086'
+        method: POST
+        url: $aa/api/user_address/update
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=utf-8
+    -   eq:
+        - content.code
+        - 1
+    -   eq:
+        - content.msg
+        - 修改成功
+    -   eq:
+        - content.data
+        - 1
+    -   eq:
+        - content.show
+        - 0

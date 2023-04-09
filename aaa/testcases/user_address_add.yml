@@ -1,0 +1,40 @@
+config:
+    name: 添加收货地址
+    variables:
+    - aa: ${ENV(base_url)}
+teststeps:
+-   name: /api/user_address/add
+    request:
+        headers:
+            Content-Type: application/json
+            token: ${login()}
+        json:
+            address: $address
+            city_id: 110100
+            contact: $contact
+            district_id: 110101
+            id: null
+            is_default: 0
+            province_id: 110000
+            telephone: '17600789086'
+        method: POST
+        url: $aa/api/user_address/add
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=utf-8
+    -   eq:
+        - content.code
+        - 1
+    -   eq:
+        - content.msg
+        - 添加成功
+    -   eq:
+        - content.data
+        - 1
+    -   eq:
+        - content.show
+        - 0

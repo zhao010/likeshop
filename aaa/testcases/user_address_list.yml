@@ -1,0 +1,28 @@
+config:
+    name: 查看收货地址列表
+    variables:
+    - aa: ${ENV(base_url)}
+teststeps:
+-   name: /api/user_address/lists
+    request:
+        headers:
+            Content-Type: application/json
+            token: ${login()}
+        method: GET
+        url: $aa/api/user_address/lists
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=utf-8
+    -   eq:
+        - content.code
+        - 1
+    -   eq:
+        - content.msg
+        - 获取成功
+    -   eq:
+        - content.show
+        - 0
